@@ -1,30 +1,46 @@
 import { defineStore } from 'pinia'
-import { curriculum as initialCurriculum, type Subject } from '~/services/curriculum'
+import { curriculumData as initialCurriculum, type Curriculum, type Domain, type Section, type Topic } from '~/services/curriculum'
 import { toast } from 'vue-sonner'
 
 export const useCurriculumStore = defineStore('curriculum', () => {
-    const subjects = ref<Subject[]>(initialCurriculum)
+    const curriculum = ref<Curriculum>(initialCurriculum)
     const loading = ref(false)
+
+    const domains = computed(() => {
+        return Object.entries(curriculum.value)
+            .filter(([key]) => key !== 'meta')
+            .map(([id, domain]) => ({ id, ...(domain as Domain) }))
+    })
 
     async function loadFromDrive() {
         loading.value = true
         try {
             const { data } = await useFetch('/api/drive/data')
             if (data.value?.data) {
+                const driveData = data.value.data as Curriculum
+
                 // Merge Drive data with initial curriculum structure
-                // This ensures new topics are added even if Drive has old data
-                const driveData = data.value.data as Subject[]
-                subjects.value = subjects.value.map(s => {
-                    const driveSubject = driveData.find(ds => ds.id === s.id)
-                    if (!driveSubject) return s
-                    return {
-                        ...s,
-                        topics: s.topics.map(t => {
-                            const driveTopic = driveSubject.topics.find(dt => dt.id === t.id)
-                            if (!driveTopic) return t
-                            return { ...t, completed: driveTopic.completed, repoLink: driveTopic.repoLink }
+                // We preserve the structure of initialCurriculum but update status and repoLink from driveData
+                Object.keys(curriculum.value).forEach(domainId => {
+                    if (domainId === 'meta') return
+
+                    const driveDomain = driveData[domainId]
+                    if (!driveDomain) return
+
+                    const domain = curriculum.value[domainId] as Domain
+                    Object.keys(domain.sections).forEach(sectionId => {
+                        const section = domain.sections[sectionId]
+                        const driveSection = driveDomain.sections?.[sectionId]
+                        if (!section || !driveSection) return
+
+                        section.topics.forEach(topic => {
+                            const driveTopic = driveSection.topics?.find((t: Topic) => t.name === topic.name)
+                            if (driveTopic) {
+                                topic.status = driveTopic.status
+                                topic.repoLink = driveTopic.repoLink
+                            }
                         })
-                    }
+                    })
                 })
             }
         } catch (error) {
@@ -39,7 +55,7 @@ export const useCurriculumStore = defineStore('curriculum', () => {
         try {
             await $fetch('/api/drive/data', {
                 method: 'POST',
-                body: subjects.value
+                body: curriculum.value
             })
         } catch (error) {
             console.error('Failed to save to Drive', error)
@@ -47,33 +63,23 @@ export const useCurriculumStore = defineStore('curriculum', () => {
         }
     }
 
-    async function scheduleMeeting(topic: any) {
-        try {
-            await $fetch('/api/calendar/event', {
-                method: 'POST',
-                body: {
-                    title: topic.title,
-                    description: topic.description
-                }
-            })
-            toast.success('Study session scheduled in your Google Calendar!')
-        } catch (error) {
-            console.error('Failed to schedule meeting', error)
-            toast.error('Failed to schedule calendar event')
-        }
-    }
 
-    function completeTopic(subjectId: string, topicId: string, repoLink: string) {
-        const subject = subjects.value.find(s => s.id === subjectId)
-        if (subject) {
-            const topic = subject.topics.find(t => t.id === topicId)
-            if (topic) {
-                topic.completed = true
-                topic.repoLink = repoLink
-                saveToDrive()
+
+    function completeTopic(domainId: string, sectionId: string, topicName: string, repoLink: string) {
+        const domain = curriculum.value[domainId] as Domain
+        if (domain) {
+            const section = domain.sections[sectionId]
+            if (section) {
+                const topic = section.topics.find(t => t.name === topicName)
+                if (topic) {
+                    topic.status = 'completed'
+                    topic.repoLink = repoLink
+                    saveToDrive()
+                }
             }
         }
     }
 
-    return { subjects, loading, loadFromDrive, saveToDrive, scheduleMeeting, completeTopic }
+    return { curriculum, domains, loading, loadFromDrive, saveToDrive, completeTopic }
 })
+
