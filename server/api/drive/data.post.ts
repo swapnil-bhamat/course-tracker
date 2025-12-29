@@ -12,11 +12,12 @@ export default defineEventHandler(async (event) => {
 
     try {
         const existingFile = await drive.files.list({
-            q: `name = '${FILENAME}'`,
-            fields: 'files(id, name)'
-        }).then(res => res.data.files[0])
+            q: `name = '${FILENAME}' and trashed = false`,
+            fields: 'files(id, name)',
+            spaces: 'drive'
+        }).then(res => res.data.files?.[0])
 
-        if (existingFile) {
+        if (existingFile && existingFile.id) {
             // Update existing file
             await drive.files.update({
                 fileId: existingFile.id,

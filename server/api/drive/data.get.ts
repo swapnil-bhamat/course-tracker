@@ -3,11 +3,11 @@ const FILENAME = 'sa_study_tracker_data.json'
 
 async function findFile(drive: any) {
     const response = await drive.files.list({
-        q: `name = '${FILENAME}'`,
+        q: `name = '${FILENAME}' and trashed = false`,
         fields: 'files(id, name)',
         spaces: 'drive'
     })
-    return response.data.files[0]
+    return response.data.files?.[0]
 }
 
 export default defineEventHandler(async (event) => {

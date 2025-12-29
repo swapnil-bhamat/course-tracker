@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { curriculumData as initialCurriculum, type Curriculum, type Domain, type Section, type Topic } from '~/services/curriculum'
 import { toast } from 'vue-sonner'
+import { useDebounceFn } from '@vueuse/core'
 
 export const useCurriculumStore = defineStore('curriculum', () => {
     const curriculum = ref<Curriculum>(initialCurriculum)
@@ -51,16 +52,20 @@ export const useCurriculumStore = defineStore('curriculum', () => {
         }
     }
 
-    async function saveToDrive() {
+    const debouncedSave = useDebounceFn(async (data: Curriculum) => {
         try {
             await $fetch('/api/drive/data', {
                 method: 'POST',
-                body: curriculum.value
+                body: data
             })
         } catch (error) {
             console.error('Failed to save to Drive', error)
             toast.error('Failed to save progress to Google Drive')
         }
+    }, 1000)
+
+    async function saveToDrive() {
+        await debouncedSave(curriculum.value)
     }
 
 
