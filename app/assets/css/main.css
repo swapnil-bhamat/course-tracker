@@ -37,10 +37,36 @@ h4,
   border: 1px solid var(--border);
   border-radius: 1rem;
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.hover-glass:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.ls-wider {
+  letter-spacing: 0.05em;
+}
+
+.grayscale {
+  filter: grayscale(1);
 }
 
 /* Custom placeholder visibility */
 ::placeholder {
   color: var(--text-muted) !important;
   opacity: 0.5;
+}
+
+.font-heading {
+  font-family: 'Outfit', sans-serif;
+}
+
+.transition-all {
+  transition: all 0.2s ease-in-out;
+}
+
+.blur-3xl {
+  filter: blur(64px);
 }

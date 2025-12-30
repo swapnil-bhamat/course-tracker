@@ -120,7 +120,32 @@ const getStatusColor = (status: string) => {
       <Loader2 class="animate-spin text-primary" :size="48" />
     </div>
 
-    <div class="row g-4">
+    <!-- Header -->
+    <header class="d-flex align-items-center justify-content-between mb-5">
+      <div>
+        <div class="d-flex align-items-center gap-3 mb-1">
+          <h1 class="h2 fw-bold mb-0 text-white">{{ curriculumStore.curriculum.meta?.goal || 'Study Planner' }}</h1>
+          <button @click="showEditGoalModal = true" class="btn btn-icon btn-sm text-white-50 hover-text-white p-0 shadow-none border-0">
+            <Edit :size="16" />
+          </button>
+        </div>
+        <div class="d-flex align-items-center gap-3 text-white-50 small">
+          <span class="d-flex align-items-center gap-1">
+            <Calendar :size="14" /> {{ curriculumStore.curriculum.meta?.duration_days || 0 }} Days Plan
+          </span>
+          <span class="d-flex align-items-center gap-1">
+            <Database :size="14" /> {{ curriculumStore.curriculum.meta?.daily_study_hours || '0' }} Hours Daily
+          </span>
+        </div>
+      </div>
+      <div class="d-flex gap-3">
+        <NuxtLink to="/manage" class="btn btn-outline-primary rounded-pill px-4 btn-sm d-flex align-items-center gap-2">
+          <Settings :size="16" /> Manage
+        </NuxtLink>
+      </div>
+    </header>
+
+    <div v-if="curriculumStore.domains.length > 0" class="row g-4">
       <!-- Sidebar: Domains -->
       <aside class="col-12 col-lg-3">
         <h2 class="h5 font-weight-bold font-heading mb-4 px-2 text-white">Pathways</h2>
@@ -137,18 +162,10 @@ const getStatusColor = (status: string) => {
             <span class="font-weight-medium text-white">{{ domain.title }}</span>
           </div>
         </div>
-        <div class="mt-auto pt-4 border-top border-secondary border-opacity-10">
-          <NuxtLink to="/manage" class="w-100 btn btn-outline-secondary border-0 d-flex align-items-center gap-3 py-3 px-4 rounded-4 transition-all hover-translate-x opacity-75 hover-opacity-100">
-            <div class="p-2 rounded-3 bg-secondary bg-opacity-10">
-              <Settings :size="20" />
-            </div>
-            <span class="fw-medium">Manage Curriculum</span>
-          </NuxtLink>
-        </div>
       </aside>
 
       <!-- Main: Sections & Topics -->
-      <section class="col-12 col-lg-9">
+      <section v-if="selectedDomain" class="col-12 col-lg-9">
         <div class="d-flex align-items-center justify-content-between mb-4">
           <h2 class="h3 font-weight-bold font-heading text-white mb-0">{{ selectedDomain.title }}</h2>
           <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill small">
@@ -163,7 +180,7 @@ const getStatusColor = (status: string) => {
           </h4>
           <div class="d-grid gap-2">
             <div v-for="topic in section.topics" :key="topic.name" 
-                 @click="openTopic(topic, sectionId)"
+                 @click="openTopic(topic, String(sectionId))"
                  class="glass-card p-3 d-flex align-items-center justify-content-between border border-transparent transition-all cursor-pointer hover-scale">
               <div class="d-flex align-items-center gap-3">
                 <div class="flex-shrink-0">
@@ -189,6 +206,18 @@ const getStatusColor = (status: string) => {
       </section>
     </div>
 
+    <!-- Empty State -->
+    <div v-else-if="!curriculumStore.loading" class="text-center py-5">
+      <div class="mb-4">
+        <Database :size="64" class="text-white-50 opacity-25" />
+      </div>
+      <h3 class="h4 text-white mb-3">No Curriculum Data Found</h3>
+      <p class="text-white-50 mb-4">Sync your curriculum from the Manage section to get started.</p>
+      <NuxtLink to="/manage" class="btn btn-primary px-4 py-2 rounded-pill">
+        Go to Manage Section
+      </NuxtLink>
+    </div>
+
     <!-- Modal: Topic Detail -->
     <div v-if="selectedTopic" 
          class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 backdrop-blur d-flex align-items-center justify-content-center p-3 z-3">
@@ -211,6 +240,7 @@ const getStatusColor = (status: string) => {
                 <span class="small font-weight-medium text-white-50 text-truncate me-3" style="max-width: 400px;">{{ url }}</span>
                 <ExternalLink :size="16" class="text-primary" />
               </a>
+              <p v-if="!selectedTopic.material?.length" class="text-white-50 small fst-italic">No materials added for this topic.</p>
             </div>
           </div>
 

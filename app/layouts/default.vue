@@ -39,15 +39,24 @@ const handleLogout = () => {
       </div>
     </header>
 
-    <main class="flex-grow-1">
+    <main class="flex-grow-1 position-relative">
+      <!-- Subtle background glow -->
+      <div class="position-absolute top-0 start-50 translate-middle-x w-100 h-100 overflow-hidden z-n1" style="max-width: 1200px; opacity: 0.1;">
+        <div class="position-absolute top-0 start-50 translate-middle w-100 h-100 bg-primary rounded-circle blur-3xl" style="filter: blur(120px);"></div>
+      </div>
+      
       <div class="container py-4">
         <slot />
       </div>
     </main>
 
-    <footer class="py-5 text-center text-muted small">
-      <div class="container">
-        <p class="mb-0">&copy; 2024 Solution Architect Journey Tracker. Built with Nuxt 3 & Bootstrap.</p>
+    <footer class="mt-auto py-5 border-top border-secondary border-opacity-10 bg-dark bg-opacity-25">
+      <div class="container text-center">
+        <div class="d-flex align-items-center justify-content-center gap-2 mb-3 grayscale opacity-50">
+          <GraduationCap :size="20" />
+          <span class="fw-bold font-heading small ls-wider">SA JOURNEY TRACKER</span>
+        </div>
+        <p class="text-white-50 small mb-0">&copy; 2024 Solution Architect Journey Tracker. Built with Nuxt 3, Pinia & Bootstrap.</p>
       </div>
     </footer>
   </div>

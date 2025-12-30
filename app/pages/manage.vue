@@ -123,6 +123,14 @@ const addMaterial = (topic: any) => {
 const removeMaterial = (topic: any, index: number) => {
   topic.material.splice(index, 1)
 }
+const handleManualSync = async () => {
+  const syncPromise = curriculumStore.saveToDrive()
+  toast.promise(syncPromise, {
+    loading: 'Syncing to Google Drive...',
+    success: 'Progress synced successfully!',
+    error: 'Failed to sync with Drive'
+  })
+}
 </script>
 
 <template>
@@ -139,7 +147,7 @@ const removeMaterial = (topic: any, index: number) => {
           </div>
         </div>
         <div class="d-flex gap-2">
-          <button @click="curriculumStore.saveToDrive" class="btn btn-primary d-flex align-items-center gap-2">
+          <button @click="handleManualSync" class="btn btn-primary d-flex align-items-center gap-2">
             <Save :size="18" /> Sync to Drive
           </button>
         </div>

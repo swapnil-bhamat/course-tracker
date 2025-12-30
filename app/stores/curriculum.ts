@@ -16,19 +16,20 @@ export const useCurriculumStore = defineStore('curriculum', () => {
     async function loadFromDrive() {
         loading.value = true
         try {
-            // 1. Try fetching from Drive
+            console.log('Fetching curriculum from Drive...')
             const { data: driveRes } = await useFetch('/api/drive/data')
 
             if (driveRes.value?.data) {
+                console.log('Loaded curriculum from Drive')
                 curriculum.value = driveRes.value.data as Curriculum
                 return
             }
 
-            // 2. If Drive is empty, fetch from local data.json
+            console.log('Drive is empty, fetching from local data.json...')
             const { data: localData } = await useFetch('/data.json')
             if (localData.value) {
+                console.log('Loaded initial curriculum from local JSON')
                 curriculum.value = localData.value as Curriculum
-                // 3. Immediately save to Drive to initialize
                 await saveToDrive()
             }
         } catch (error) {
@@ -45,14 +46,15 @@ export const useCurriculumStore = defineStore('curriculum', () => {
                 method: 'POST',
                 body: data
             })
+            return true
         } catch (error) {
             console.error('Failed to save to Drive', error)
-            // toast.error('Failed to save progress to Google Drive')
+            throw error
         }
     }, 1000)
 
     async function saveToDrive() {
-        await debouncedSave(curriculum.value)
+        return await debouncedSave(curriculum.value)
     }
 
     // CRUD ACTIONS
