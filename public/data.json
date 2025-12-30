@@ -1,95 +1,255 @@
 {
     "meta": {
-        "goal": "Become a strong Software Architect",
-        "duration_days": 120,
+        "goal": "Master Low-Level Design (Node.js/TS)",
+        "duration_days": 60,
         "daily_study_hours": "2–3"
     },
     "LLD": {
-        "title": "LLD Deep Dive",
-        "estimated_days": 40,
+        "title": "LLD Deep Dive (Node/TS)",
+        "estimated_days": 60,
         "sections": {
-            "oop_fundamentals": {
-                "title": "OOP & Design Fundamentals",
+            "00_prerequisites": {
+                "title": "TypeScript & Node.js Fundamentals",
                 "topics": [
                     {
-                        "name": "SOLID Principles",
+                        "name": "Advanced TypeScript (Generics, Decorators, Utility Types)",
                         "estimated_time_hours": 6,
                         "interview_frequency_score": 5,
                         "status": "pending",
                         "material": [
-                            "https://martinfowler.com/bliki/SOLID.html",
-                            "https://refactoring.guru/design-patterns/solid"
+                            "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+                            "https://www.typescriptlang.org/docs/handbook/decorators.html"
                         ]
                     },
                     {
-                        "name": "Composition over Inheritance",
-                        "estimated_time_hours": 3,
-                        "interview_frequency_score": 4,
+                        "name": "Node.js Internals (Event Loop, Buffer, Streams)",
+                        "estimated_time_hours": 6,
+                        "interview_frequency_score": 5,
                         "status": "pending",
                         "material": [
-                            "https://martinfowler.com/bliki/CompositionOverInheritance.html"
-                        ]
-                    },
-                    {
-                        "name": "Immutability & Value Objects",
-                        "estimated_time_hours": 3,
-                        "interview_frequency_score": 3,
-                        "status": "pending",
-                        "material": [
-                            "https://martinfowler.com/bliki/ValueObject.html"
+                            "https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/",
+                            "https://nodejs.org/api/stream.html"
                         ]
                     }
                 ]
             },
-            "design_patterns": {
-                "title": "Design Patterns",
+            "01_oop_design_principles": {
+                "title": "OOP & Design Principles",
                 "topics": [
                     {
-                        "name": "Creational Patterns",
-                        "estimated_time_hours": 6,
-                        "interview_frequency_score": 4,
-                        "status": "pending",
-                        "material": [
-                            "https://refactoring.guru/design-patterns/creational-patterns"
-                        ]
-                    },
-                    {
-                        "name": "Structural Patterns",
-                        "estimated_time_hours": 6,
-                        "interview_frequency_score": 4,
-                        "status": "pending",
-                        "material": [
-                            "https://refactoring.guru/design-patterns/structural-patterns"
-                        ]
-                    },
-                    {
-                        "name": "Behavioral Patterns",
+                        "name": "SOLID Principles in TypeScript",
                         "estimated_time_hours": 6,
                         "interview_frequency_score": 5,
                         "status": "pending",
                         "material": [
-                            "https://refactoring.guru/design-patterns/behavioral-patterns"
+                            "https://khalilstemmler.com/articles/solid-principles/solid-typescript/",
+                            "https://medium.com/backticks-tildes/the-s-o-l-i-d-principles-in-pictures-b34ce2f1e898"
+                        ]
+                    },
+                    {
+                        "name": "DRY, KISS, YAGNI",
+                        "estimated_time_hours": 2,
+                        "interview_frequency_score": 3,
+                        "status": "pending",
+                        "material": [
+                            "https://khalilstemmler.com/wiki/kiss/"
                         ]
                     }
                 ]
-            }
-        }
-    },
-    "HLD": {
-        "title": "High-Level System Design",
-        "estimated_days": 40,
-        "sections": {
-            "fundamentals": {
-                "title": "System Design Fundamentals",
+            },
+            "02_creational_patterns": {
+                "title": "Creational Patterns",
                 "topics": [
                     {
-                        "name": "Scalability, Availability, Latency",
+                        "name": "Singleton Pattern (TS)",
+                        "estimated_time_hours": 2,
+                        "interview_frequency_score": 4,
+                        "status": "pending",
+                        "material": [
+                            "https://refactoring.guru/design-patterns/singleton/typescript/example"
+                        ]
+                    },
+                    {
+                        "name": "Factory & Abstract Factory (TS)",
+                        "estimated_time_hours": 4,
+                        "interview_frequency_score": 5,
+                        "status": "pending",
+                        "material": [
+                            "https://refactoring.guru/design-patterns/factory-method/typescript/example",
+                            "https://refactoring.guru/design-patterns/abstract-factory/typescript/example"
+                        ]
+                    },
+                    {
+                        "name": "Builder Pattern (TS)",
+                        "estimated_time_hours": 3,
+                        "interview_frequency_score": 4,
+                        "status": "pending",
+                        "material": [
+                            "https://refactoring.guru/design-patterns/builder/typescript/example"
+                        ]
+                    }
+                ]
+            },
+            "03_structural_patterns": {
+                "title": "Structural Patterns",
+                "topics": [
+                    {
+                        "name": "Adapter Pattern (TS)",
+                        "estimated_time_hours": 3,
+                        "interview_frequency_score": 4,
+                        "status": "pending",
+                        "material": [
+                            "https://refactoring.guru/design-patterns/adapter/typescript/example"
+                        ]
+                    },
+                    {
+                        "name": "Decorator Pattern (TS)",
+                        "estimated_time_hours": 4,
+                        "interview_frequency_score": 5,
+                        "status": "pending",
+                        "material": [
+                            "https://refactoring.guru/design-patterns/decorator/typescript/example",
+                            "https://www.typescriptlang.org/docs/handbook/decorators.html"
+                        ]
+                    },
+                    {
+                        "name": "Facade Pattern (TS)",
+                        "estimated_time_hours": 2,
+                        "interview_frequency_score": 3,
+                        "status": "pending",
+                        "material": [
+                            "https://refactoring.guru/design-patterns/facade/typescript/example"
+                        ]
+                    },
+                    {
+                        "name": "Proxy Pattern (TS)",
+                        "estimated_time_hours": 3,
+                        "interview_frequency_score": 4,
+                        "status": "pending",
+                        "material": [
+                            "https://refactoring.guru/design-patterns/proxy/typescript/example"
+                        ]
+                    }
+                ]
+            },
+            "04_behavioral_patterns": {
+                "title": "Behavioral Patterns",
+                "topics": [
+                    {
+                        "name": "Strategy Pattern (TS)",
+                        "estimated_time_hours": 3,
+                        "interview_frequency_score": 5,
+                        "status": "pending",
+                        "material": [
+                            "https://refactoring.guru/design-patterns/strategy/typescript/example"
+                        ]
+                    },
+                    {
+                        "name": "Observer Pattern (Event Emitters)",
+                        "estimated_time_hours": 4,
+                        "interview_frequency_score": 5,
+                        "status": "pending",
+                        "material": [
+                            "https://refactoring.guru/design-patterns/observer/typescript/example",
+                            "https://nodejs.org/api/events.html"
+                        ]
+                    },
+                    {
+                        "name": "Command Pattern (TS)",
+                        "estimated_time_hours": 3,
+                        "interview_frequency_score": 3,
+                        "status": "pending",
+                        "material": [
+                            "https://refactoring.guru/design-patterns/command/typescript/example"
+                        ]
+                    },
+                    {
+                        "name": "State Pattern (TS)",
+                        "estimated_time_hours": 3,
+                        "interview_frequency_score": 4,
+                        "status": "pending",
+                        "material": [
+                            "https://refactoring.guru/design-patterns/state/typescript/example"
+                        ]
+                    }
+                ]
+            },
+            "05_async_concurrency": {
+                "title": "Async & Scalability Patterns",
+                "topics": [
+                    {
+                        "name": "Async Patterns (Promises, Async/Await)",
+                        "estimated_time_hours": 4,
+                        "interview_frequency_score": 5,
+                        "status": "pending",
+                        "material": [
+                            "https://javascript.info/async"
+                        ]
+                    },
+                    {
+                        "name": "Node.js Concurrency (Cluster, Worker Threads)",
                         "estimated_time_hours": 5,
                         "interview_frequency_score": 5,
                         "status": "pending",
                         "material": [
-                            "https://github.com/donnemartin/system-design-primer",
-                            "https://aws.amazon.com/builders-library/"
+                            "https://nodejs.org/api/cluster.html",
+                            "https://nodejs.org/api/worker_threads.html"
+                        ]
+                    }
+                ]
+            },
+            "06_schema_design": {
+                "title": "Schema Design",
+                "topics": [
+                    {
+                        "name": "Database Normalization & Relationships",
+                        "estimated_time_hours": 4,
+                        "interview_frequency_score": 4,
+                        "status": "pending",
+                        "material": [
+                            "https://www.geeksforgeeks.org/database-normalization-introduction/"
+                        ]
+                    }
+                ]
+            },
+            "07_machine_coding": {
+                "title": "Machine Coding (Node/TS)",
+                "topics": [
+                    {
+                        "name": "Design a Parking Lot (TS)",
+                        "estimated_time_hours": 4,
+                        "interview_frequency_score": 5,
+                        "status": "pending",
+                        "material": [
+                            "https://medium.com/double-pointer/system-design-interview-parking-lot-system-ff2c58167626"
+                        ]
+                    },
+                    {
+                        "name": "Design Splitwise (TS)",
+                        "estimated_time_hours": 4,
+                        "interview_frequency_score": 4,
+                        "status": "pending",
+                        "material": [
+                            "https://medium.com/@swarupkumar/design-splitwise-low-level-design-130ab4df79ee"
+                        ]
+                    },
+                    {
+                        "name": "Design Rate Limiter (Node.js)",
+                        "estimated_time_hours": 4,
+                        "interview_frequency_score": 5,
+                        "status": "pending",
+                        "material": [
+                            "https://blog.logrocket.com/rate-limiting-node-js/",
+                            "https://github.com/animir/node-rate-limiter-flexible"
+                        ]
+                    },
+                    {
+                        "name": "Design In-Memory Key-Value Store",
+                        "estimated_time_hours": 3,
+                        "interview_frequency_score": 4,
+                        "status": "pending",
+                        "material": [
+                            "https://levelup.gitconnected.com/build-a-key-value-store-in-node-js-2d572aa64152"
                         ]
                     }
                 ]
