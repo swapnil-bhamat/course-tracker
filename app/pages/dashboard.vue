@@ -236,9 +236,9 @@ const getStatusColor = (status: string) => {
             <div class="d-grid gap-2">
               <a v-for="url in selectedTopic.material" 
                  :key="url" :href="url" target="_blank"
-                 class="d-flex align-items-center justify-content-between p-3 bg-secondary bg-opacity-10 rounded-3 border border-secondary border-opacity-10 text-decoration-none text-light hover-bg-soft transition-colors">
-                <span class="small font-weight-medium text-white-50 text-truncate me-3" style="max-width: 400px;">{{ url }}</span>
-                <ExternalLink :size="16" class="text-primary" />
+                 class="d-flex align-items-center justify-content-between p-3 bg-secondary bg-opacity-10 rounded-3 border border-secondary border-opacity-10 text-decoration-none text-light hover-bg-soft transition-colors text-truncate">
+                <span class="small font-weight-medium text-white-50 text-truncate me-3" style="min-width: 0;">{{ url }}</span>
+                <ExternalLink :size="16" class="text-primary flex-shrink-0" />
               </a>
               <p v-if="!selectedTopic.material?.length" class="text-white-50 small fst-italic">No materials added for this topic.</p>
             </div>
