@@ -16,36 +16,23 @@ export const useCurriculumStore = defineStore('curriculum', () => {
     async function loadFromDrive() {
         loading.value = true
         try {
-            const { data } = await useFetch('/api/drive/data')
-            if (data.value?.data) {
-                const driveData = data.value.data as Curriculum
+            // 1. Try fetching from Drive
+            const { data: driveRes } = await useFetch('/api/drive/data')
 
-                // Merge Drive data with initial curriculum structure
-                // We preserve the structure of initialCurriculum but update status and repoLink from driveData
-                Object.keys(curriculum.value).forEach(domainId => {
-                    if (domainId === 'meta') return
+            if (driveRes.value?.data) {
+                curriculum.value = driveRes.value.data as Curriculum
+                return
+            }
 
-                    const driveDomain = driveData[domainId]
-                    if (!driveDomain) return
-
-                    const domain = curriculum.value[domainId] as Domain
-                    Object.keys(domain.sections).forEach(sectionId => {
-                        const section = domain.sections[sectionId]
-                        const driveSection = driveDomain.sections?.[sectionId]
-                        if (!section || !driveSection) return
-
-                        section.topics.forEach(topic => {
-                            const driveTopic = driveSection.topics?.find((t: Topic) => t.name === topic.name)
-                            if (driveTopic) {
-                                topic.status = driveTopic.status
-                                topic.repoLink = driveTopic.repoLink
-                            }
-                        })
-                    })
-                })
+            // 2. If Drive is empty, fetch from local data.json
+            const { data: localData } = await useFetch('/data.json')
+            if (localData.value) {
+                curriculum.value = localData.value as Curriculum
+                // 3. Immediately save to Drive to initialize
+                await saveToDrive()
             }
         } catch (error) {
-            console.error('Failed to load from Drive', error)
+            console.error('Failed to sync data', error)
             toast.error('Failed to sync with Google Drive')
         } finally {
             loading.value = false
@@ -60,7 +47,7 @@ export const useCurriculumStore = defineStore('curriculum', () => {
             })
         } catch (error) {
             console.error('Failed to save to Drive', error)
-            toast.error('Failed to save progress to Google Drive')
+            // toast.error('Failed to save progress to Google Drive')
         }
     }, 1000)
 
@@ -68,7 +55,40 @@ export const useCurriculumStore = defineStore('curriculum', () => {
         await debouncedSave(curriculum.value)
     }
 
+    // CRUD ACTIONS
+    function updateMeta(meta: any) {
+        curriculum.value.meta = { ...curriculum.value.meta, ...meta }
+        saveToDrive()
+    }
 
+    function addDomain(id: string, domain: Domain) {
+        curriculum.value[id] = domain
+        saveToDrive()
+    }
+
+    function updateDomain(id: string, domain: Domain) {
+        curriculum.value[id] = { ...curriculum.value[id], ...domain }
+        saveToDrive()
+    }
+
+    function deleteDomain(id: string) {
+        delete curriculum.value[id]
+        saveToDrive()
+    }
+
+    function updateSection(domainId: string, sectionId: string, section: Section) {
+        if (curriculum.value[domainId]) {
+            curriculum.value[domainId].sections[sectionId] = section
+            saveToDrive()
+        }
+    }
+
+    function deleteSection(domainId: string, sectionId: string) {
+        if (curriculum.value[domainId]) {
+            delete curriculum.value[domainId].sections[sectionId]
+            saveToDrive()
+        }
+    }
 
     function completeTopic(domainId: string, sectionId: string, topicName: string, repoLink: string) {
         const domain = curriculum.value[domainId] as Domain
@@ -85,6 +105,19 @@ export const useCurriculumStore = defineStore('curriculum', () => {
         }
     }
 
-    return { curriculum, domains, loading, loadFromDrive, saveToDrive, completeTopic }
+    return {
+        curriculum,
+        domains,
+        loading,
+        loadFromDrive,
+        saveToDrive,
+        updateMeta,
+        addDomain,
+        updateDomain,
+        deleteDomain,
+        updateSection,
+        deleteSection,
+        completeTopic
+    }
 })
 

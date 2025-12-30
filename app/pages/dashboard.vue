@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useAuthStore } from '~/stores/auth'
 import { useCurriculumStore } from '~/stores/curriculum'
-import { BookOpen, CheckCircle, Circle, ExternalLink, Calendar, Send, ArrowRight, Loader2, Database, Cloud } from 'lucide-vue-next'
+import { BookOpen, CheckCircle, Circle, ExternalLink, Calendar, Send, ArrowRight, Loader2, Database, Cloud, Settings, Edit } from 'lucide-vue-next'
 import { toast } from 'vue-sonner'
 
 const auth = useAuthStore()
@@ -14,6 +14,25 @@ const selectedSectionId = ref(null as string | null)
 const selectedTopic = ref(null as any)
 const repoLink = ref('')
 const isSubmitting = ref(false)
+const showEditGoalModal = ref(false)
+const metaForm = ref({
+  goal: '',
+  duration_days: 120,
+  daily_study_hours: '2-3'
+})
+
+// Initialize meta form when curriculum is loaded
+watch(() => curriculumStore.curriculum.meta, (newMeta) => {
+  if (newMeta) {
+    metaForm.value = { ...newMeta }
+  }
+}, { immediate: true, deep: true })
+
+const handleEditGoal = () => {
+  curriculumStore.updateMeta(metaForm.value)
+  showEditGoalModal.value = false
+  toast.success('Study goal updated!')
+}
 
 // Initialize and protect route
 onMounted(async () => {
@@ -118,6 +137,14 @@ const getStatusColor = (status: string) => {
             <span class="font-weight-medium text-white">{{ domain.title }}</span>
           </div>
         </div>
+        <div class="mt-auto pt-4 border-top border-secondary border-opacity-10">
+          <NuxtLink to="/manage" class="w-100 btn btn-outline-secondary border-0 d-flex align-items-center gap-3 py-3 px-4 rounded-4 transition-all hover-translate-x opacity-75 hover-opacity-100">
+            <div class="p-2 rounded-3 bg-secondary bg-opacity-10">
+              <Settings :size="20" />
+            </div>
+            <span class="fw-medium">Manage Curriculum</span>
+          </NuxtLink>
+        </div>
       </aside>
 
       <!-- Main: Sections & Topics -->
@@ -217,6 +244,29 @@ const getStatusColor = (status: string) => {
         </div>
       </div>
     </div>
+
+    <!-- Edit Goal Modal -->
+    <BModal v-model="showEditGoalModal" title="Configure Study Goal" hide-footer centered header-bg-variant="dark" header-text-variant="white" body-bg-variant="dark" body-text-variant="white" content-class="border-secondary border-opacity-25 rounded-4 overflow-hidden">
+      <div class="p-2">
+        <div class="mb-3">
+          <label class="form-label small text-white-50">Career Goal</label>
+          <input v-model="metaForm.goal" type="text" class="form-control bg-dark text-white border-secondary border-opacity-25 shadow-none" placeholder="e.g. Become a strong Software Architect" />
+        </div>
+        <div class="row g-3 mb-4">
+          <div class="col-6">
+            <label class="form-label small text-white-50">Duration (Days)</label>
+            <input v-model.number="metaForm.duration_days" type="number" class="form-control bg-dark text-white border-secondary border-opacity-25 shadow-none" />
+          </div>
+          <div class="col-6">
+            <label class="form-label small text-white-50">Daily Hours</label>
+            <input v-model="metaForm.daily_study_hours" type="text" class="form-control bg-dark text-white border-secondary border-opacity-25 shadow-none" placeholder="e.g. 2-3" />
+          </div>
+        </div>
+        <div class="d-grid">
+          <button @click="handleEditGoal" class="btn btn-primary py-2 fw-bold">Save Configuration</button>
+        </div>
+      </div>
+    </BModal>
   </div>
 </template>
 
