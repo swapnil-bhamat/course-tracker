@@ -8,6 +8,9 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
+  nitro: {
+    preset: "netlify",
+  },
   modules: [
     "@pinia/nuxt",
     "@vueuse/nuxt",
