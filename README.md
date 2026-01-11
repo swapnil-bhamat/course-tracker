@@ -2,6 +2,10 @@
 
 A modern, structured curriculum tracker designed to help developers transition into Software Architects. This application synchronizes your progress across your Google workspace, utilizing Google Drive for data storage and Google Calendar for scheduling study sessions.
 
+## Demo
+
+[Live Demo](https://self-education-tracker.netlify.app/)
+
 ## 🚀 Features
 
 - **Structured Curriculum**: Built-in pathways for LLD (Low-Level Design), HLD (High-Level Design), and AWS.
@@ -10,6 +14,16 @@ A modern, structured curriculum tracker designed to help developers transition i
 - **Management Portal**: Full control over your study goals, pathways, sections, and topics.
 - **Assignment Submission**: Track your practical learning by linking GitHub repositories to specific topics.
 - **Real-time Sync**: Debounced auto-saving to Google Drive and manual sync options.
+
+## 📸 Screenshots
+
+### Desktop
+
+![Desktop Screenshot](./public/Desktop%20screen%20shot.png)
+
+### Mobile
+
+![Mobile Screenshot](./public/Mobile%20screen%20shot.png)
 
 ## 🛠 Tech Stack
 
