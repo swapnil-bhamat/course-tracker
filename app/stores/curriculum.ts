@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { curriculumData as initialCurriculum, type Curriculum, type Domain, type Section, type Topic } from '~/services/curriculum'
+import { curriculumData as initialCurriculum, type Curriculum, type Track, type Topic } from '~/services/curriculum'
 import { toast } from 'vue-sonner'
 import { useDebounceFn } from '@vueuse/core'
 
@@ -8,9 +8,9 @@ export const useCurriculumStore = defineStore('curriculum', () => {
     const loading = ref(false)
 
     const domains = computed(() => {
-        return Object.entries(curriculum.value)
-            .filter(([key]) => key !== 'meta')
-            .map(([id, domain]) => ({ id, ...(domain as Domain) }))
+        if (!curriculum.value.STUDY_TRACK) return []
+        return Object.entries(curriculum.value.STUDY_TRACK)
+            .map(([id, track]) => ({ id, ...track }))
     })
 
     async function loadFromDrive() {
@@ -63,46 +63,37 @@ export const useCurriculumStore = defineStore('curriculum', () => {
         saveToDrive()
     }
 
-    function addDomain(id: string, domain: Domain) {
-        curriculum.value[id] = domain
+    function addTrack(id: string, track: any) {
+        if (!curriculum.value.STUDY_TRACK) curriculum.value.STUDY_TRACK = {}
+        curriculum.value.STUDY_TRACK[id] = track
         saveToDrive()
     }
 
-    function updateDomain(id: string, domain: Domain) {
-        curriculum.value[id] = { ...curriculum.value[id], ...domain }
-        saveToDrive()
-    }
-
-    function deleteDomain(id: string) {
-        delete curriculum.value[id]
-        saveToDrive()
-    }
-
-    function updateSection(domainId: string, sectionId: string, section: Section) {
-        if (curriculum.value[domainId]) {
-            curriculum.value[domainId].sections[sectionId] = section
+    function updateTrack(id: string, track: any) {
+        if (curriculum.value.STUDY_TRACK && curriculum.value.STUDY_TRACK[id]) {
+            curriculum.value.STUDY_TRACK[id] = { ...curriculum.value.STUDY_TRACK[id], ...track }
             saveToDrive()
         }
     }
 
-    function deleteSection(domainId: string, sectionId: string) {
-        if (curriculum.value[domainId]) {
-            delete curriculum.value[domainId].sections[sectionId]
+    function deleteTrack(id: string) {
+        if (curriculum.value.STUDY_TRACK) {
+            delete curriculum.value.STUDY_TRACK[id]
             saveToDrive()
         }
     }
 
-    function completeTopic(domainId: string, sectionId: string, topicName: string, repoLink: string) {
-        const domain = curriculum.value[domainId] as Domain
-        if (domain) {
-            const section = domain.sections[sectionId]
-            if (section) {
-                const topic = section.topics.find(t => t.name === topicName)
-                if (topic) {
-                    topic.status = 'completed'
-                    topic.repoLink = repoLink
-                    saveToDrive()
-                }
+    // Sections logic removed
+
+    function completeTopic(trackId: string, topicName: string, repoLink: string) {
+        const track = curriculum.value.STUDY_TRACK?.[trackId]
+        if (track) {
+            const topic = track.topics.find(t => t.name === topicName)
+            if (topic) {
+                topic.status = 'completed'
+                topic.repoLink = repoLink
+                topic.last_touched_date = new Date().toISOString()
+                saveToDrive()
             }
         }
     }
@@ -114,11 +105,9 @@ export const useCurriculumStore = defineStore('curriculum', () => {
         loadFromDrive,
         saveToDrive,
         updateMeta,
-        addDomain,
-        updateDomain,
-        deleteDomain,
-        updateSection,
-        deleteSection,
+        addTrack,
+        updateTrack,
+        deleteTrack,
         completeTopic
     }
 })

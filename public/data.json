@@ -1,156 +1,268 @@
 {
   "meta": {
-    "goal": "Architect Interview Readiness – 2 Week Sprint",
-    "duration_days": 14,
-    "daily_study_hours": "2 (weekday) / 4 (weekend)",
-    "focus": [
-      "OCS Architecture Explanation",
-      "LLD Fundamentals",
-      "Architect Thinking",
-      "Trade-offs",
-      "Mock Interview Readiness"
+    "goal": "Software Architect / Staff–Principal IC Interview Readiness",
+    "duration_days": 120,
+    "career_context": {
+      "experience_years": "12+",
+      "current_state": "Role stagnation >4 years, no IC architect ladder",
+      "strategy": "External switch with calm, deliberate preparation",
+      "constraints": [
+        "Low stress",
+        "No panic",
+        "Consistency challenges acknowledged"
+      ],
+      "financial_state": "Stable buffers, no urgency"
+    },
+    "preparation_philosophy": "Decision quality > volume of study"
+  },
+
+  "GLOBAL_DEFAULTS": {
+    "calendar_block_minutes": 20,
+    "fallback_block_minutes": 5,
+    "preferred_time_windows": ["Morning", "Early Evening"],
+    "success_definition": "Any tangible artifact produced",
+    "progress_metric": "last_touched_date"
+  },
+
+  "CONSISTENCY_MODEL": {
+    "rules": [
+      "Never skip twice",
+      "Leave a trace every session",
+      "Bad days still count",
+      "One active focus per week"
+    ],
+    "energy_modes": {
+      "normal": {
+        "calendar_block_minutes": 20,
+        "allowed_actions": ["design", "write", "explain"]
+      },
+      "low": {
+        "calendar_block_minutes": 5,
+        "allowed_actions": ["outline", "review", "bullet_notes"]
+      }
+    }
+  },
+
+  "WEEKLY_CONTROL": {
+    "weekly_focus": null,
+    "max_active_topics": 4,
+    "weekly_review_minutes": 10,
+    "adaptation_rules": {
+      "missed_sessions": "Reduce scope, not frequency",
+      "low_energy": "Switch to fallback mode"
+    }
+  },
+
+  "CAREER_TARGET": {
+    "target_roles": [
+      "Software Architect",
+      "Staff Software Engineer",
+      "Senior Software Engineer – Architecture / Platform",
+      "Principal Engineer (scope-matched)"
+    ],
+    "avoid_roles": [
+      "Firefighting-heavy roles",
+      "Vague architect titles",
+      "No senior IC ladder"
     ]
   },
 
-  "LLD": {
-    "title": "LLD Foundations (Interview-Focused)",
-    "estimated_days": 10,
-    "sections": {
-      "00_prerequisites": {
-        "title": "Node.js & TypeScript Essentials",
-        "topics": [
-          {
-            "name": "Node.js runtime basics (event loop, async flow)",
-            "estimated_time_hours": 4,
-            "interview_frequency_score": 5,
-            "status": "pending",
-            "material": []
-          }
-        ]
-      },
+  "STUDY_TRACK": {
+    "LLD": {
+      "title": "Low-Level Design (Extensibility & Clean Boundaries)",
+      "topics": [
+        {
+          "name": "SOLID & OCP in production systems",
+          "status": "completed",
+          "micro_task": "Document 3 real SOLID/OCP violations you fixed",
+          "last_touched_date": null
+        },
+        {
+          "name": "Hexagonal / Clean Architecture",
+          "status": "completed",
+          "micro_task": "Draw ports & adapters for a real project",
+          "last_touched_date": null
+        },
+        {
+          "name": "Factory & Strategy patterns",
+          "status": "pending",
+          "micro_task": "Refactor if-else logic using Strategy + Factory",
+          "last_touched_date": null
+        },
+        {
+          "name": "Adapter & Decorator patterns",
+          "status": "pending",
+          "micro_task": "Design backward-compatible adapter for legacy API",
+          "last_touched_date": null
+        },
+        {
+          "name": "Async workflows, retries, idempotency",
+          "status": "pending",
+          "micro_task": "Design idempotent retry flow for payment API",
+          "last_touched_date": null
+        },
+        {
+          "name": "Schema design & backward-compatible migrations",
+          "status": "pending",
+          "micro_task": "Outline zero-downtime migration steps",
+          "last_touched_date": null
+        },
+        {
+          "name": "Machine coding (architect lens)",
+          "status": "pending",
+          "micro_task": "Design a service with extensibility & testability",
+          "last_touched_date": null
+        }
+      ]
+    },
 
-      "01_oop_design_principles": {
-        "title": "OOP & Design Principles",
-        "topics": [
-          {
-            "name": "SOLID principles with real system examples (OCS)",
-            "estimated_time_hours": 4,
-            "interview_frequency_score": 5,
-            "status": "pending",
-            "material": []
-          }
-        ]
-      },
-
-      "02_design_patterns": {
-        "title": "Core Design Patterns",
-        "topics": [
-          {
-            "name": "Factory & Strategy patterns (extensibility focus)",
-            "estimated_time_hours": 4,
-            "interview_frequency_score": 5,
-            "status": "pending",
-            "material": []
-          }
-        ]
-      },
-
-      "03_async_concurrency": {
-        "title": "Async & Concurrency",
-        "topics": [
-          {
-            "name": "Async patterns, error handling & scalability",
-            "estimated_time_hours": 4,
-            "interview_frequency_score": 5,
-            "status": "pending",
-            "material": []
-          }
-        ]
-      },
-
-      "04_schema_design": {
-        "title": "Schema & Data Design",
-        "topics": [
-          {
-            "name": "Schema design & backward-compatible evolution",
-            "estimated_time_hours": 3,
-            "interview_frequency_score": 5,
-            "status": "pending",
-            "material": []
-          }
-        ]
-      },
-
-      "05_machine_coding": {
-        "title": "Machine Coding (Architect Lens)",
-        "topics": [
-          {
-            "name": "Design a simple service with extensibility & trade-offs",
-            "estimated_time_hours": 3,
-            "interview_frequency_score": 4,
-            "status": "pending",
-            "material": []
-          }
-        ]
-      }
+    "ARCHITECT_THINKING": {
+      "title": "System Design, Trade-offs & Evolution",
+      "topics": [
+        {
+          "name": "Explain a real system end-to-end",
+          "status": "pending",
+          "micro_task": "Explain architecture, boundaries, and evolution in 10–15 minutes",
+          "last_touched_date": null
+        },
+        {
+          "name": "Monorepo vs multi-repo trade-offs",
+          "status": "pending",
+          "micro_task": "Write ADR with 3 trade-offs and final decision",
+          "last_touched_date": null
+        },
+        {
+          "name": "Sync vs async communication",
+          "status": "pending",
+          "micro_task": "Explain scenarios where async hurts more than helps",
+          "last_touched_date": null
+        },
+        {
+          "name": "Failure handling & resilience",
+          "status": "pending",
+          "micro_task": "Design graceful degradation for partial failures",
+          "last_touched_date": null
+        },
+        {
+          "name": "Scalability & performance",
+          "status": "pending",
+          "micro_task": "Identify hot paths and caching strategy",
+          "last_touched_date": null
+        },
+        {
+          "name": "Observability (logs, metrics, traces)",
+          "status": "pending",
+          "micro_task": "Define SLIs/SLOs for a core service",
+          "last_touched_date": null
+        },
+        {
+          "name": "System evolution & migration patterns",
+          "status": "pending",
+          "micro_task": "Design strangler-fig migration plan",
+          "last_touched_date": null
+        },
+        {
+          "name": "HLD archetype: Payment system",
+          "status": "pending",
+          "micro_task": "Design payment flow with idempotency & ledger safety",
+          "last_touched_date": null
+        },
+        {
+          "name": "HLD archetype: Notification / real-time system",
+          "status": "pending",
+          "micro_task": "Design pub-sub based notification architecture",
+          "last_touched_date": null
+        }
+      ]
     }
   },
 
-  "ARCHITECT_THINKING": {
-    "title": "Architect Thinking (OCS-Centric)",
-    "estimated_days": 4,
-    "sections": {
-      "00_ocs_architecture": {
-        "title": "OCS Architecture Explanation",
-        "topics": [
-          {
-            "name": "Explain OCS architecture end-to-end in 10–12 minutes",
-            "estimated_time_hours": 4,
-            "interview_frequency_score": 5,
-            "status": "pending",
-            "material": []
-          }
-        ]
+  "DECISION_NARRATIVES": {
+    "title": "Architect-Level Decision Stories",
+    "topics": [
+      {
+        "name": "Decision I reversed",
+        "status": "pending",
+        "micro_task": "Explain why original decision failed and what changed",
+        "last_touched_date": null
       },
-
-      "01_trade_offs": {
-        "title": "Architectural Trade-offs",
-        "topics": [
-          {
-            "name": "Monorepo vs multi-repo, sync vs async, cost vs scale",
-            "estimated_time_hours": 3,
-            "interview_frequency_score": 5,
-            "status": "pending",
-            "material": []
-          }
-        ]
+      {
+        "name": "Trade-off defended under pressure",
+        "status": "pending",
+        "micro_task": "Explain cost vs scale vs complexity decision",
+        "last_touched_date": null
       },
-
-      "02_failure_handling": {
-        "title": "Failure Handling & Resilience",
-        "topics": [
-          {
-            "name": "Partial failures, retries, graceful degradation (OCS)",
-            "estimated_time_hours": 3,
-            "interview_frequency_score": 5,
-            "status": "pending",
-            "material": []
-          }
-        ]
-      },
-
-      "03_mock_interview": {
-        "title": "Mock Interview Preparation",
-        "topics": [
-          {
-            "name": "Mock interview: OCS + trade-offs + architecture decisions",
-            "estimated_time_hours": 4,
-            "interview_frequency_score": 5,
-            "status": "pending",
-            "material": []
-          }
-        ]
+      {
+        "name": "Failure that improved the system",
+        "status": "pending",
+        "micro_task": "Explain guardrails added after failure",
+        "last_touched_date": null
       }
+    ]
+  },
+
+  "INTERVIEW_READINESS": {
+    "round_mapping": {
+      "LLD": {
+        "focus": [
+          "Design patterns",
+          "Extensibility",
+          "Clean boundaries",
+          "Testability"
+        ],
+        "expected_output": "Code-level / whiteboard design with trade-offs"
+      },
+      "HLD": {
+        "focus": [
+          "System boundaries",
+          "Scalability",
+          "Failure modes",
+          "Evolution"
+        ],
+        "expected_output": "End-to-end system design explained in 10–15 minutes"
+      },
+      "BEHAVIORAL": {
+        "focus": ["Judgment", "Influence without authority", "Ownership"],
+        "expected_output": "Clear, calm real-world narratives"
+      }
+    },
+    "application_readiness_gate": {
+      "purpose": "Signal when to start applying without panic",
+      "rule": "Apply when minimum gates are satisfied",
+      "minimum_gates": {
+        "LLD": {
+          "required_topics": [
+            "Factory & Strategy patterns",
+            "Hexagonal / Clean Architecture"
+          ],
+          "completion_criteria": "Can design and explain trade-offs without notes"
+        },
+        "HLD": {
+          "required_topics": [
+            "Explain a real system end-to-end",
+            "Monorepo vs multi-repo trade-offs"
+          ],
+          "completion_criteria": "Can explain clearly in 10–15 minutes"
+        },
+        "BEHAVIORAL": {
+          "required_topics": [
+            "Decision I reversed",
+            "Trade-off defended under pressure"
+          ],
+          "completion_criteria": "Can narrate calmly with learning focus"
+        }
+      },
+      "confidence_threshold": "Comfortable handling 1 interview per week",
+      "recommendation_on_pass": "You can now start applying (calibration phase)"
+    },
+    "mock_interviews": {
+      "frequency": "Bi-weekly",
+      "status": "planned"
     }
+  },
+
+  "OUTPUT_ARTIFACTS": {
+    "types": ["ADR", "Diagram", "Code sketch", "Explanation notes"],
+    "storage": "GitHub / Notes / App-linked"
   }
 }
