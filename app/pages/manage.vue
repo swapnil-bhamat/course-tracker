@@ -16,6 +16,7 @@ import {
   GraduationCap,
   FileText,
   Activity,
+  RefreshCcw,
 } from "lucide-vue-next";
 import { toast } from "vue-sonner";
 
@@ -120,6 +121,12 @@ const deleteTopic = (trackId: string, index: number) => {
           </div>
         </div>
         <div class="d-flex gap-2">
+          <button
+            @click="curriculumStore.resetFromLocal"
+            class="btn btn-outline-warning d-flex align-items-center gap-2"
+          >
+            <RefreshCcw :size="18" /> Reset to Local JSON
+          </button>
           <button
             @click="saveAll"
             class="btn btn-primary d-flex align-items-center gap-2"

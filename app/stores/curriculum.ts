@@ -98,11 +98,30 @@ export const useCurriculumStore = defineStore('curriculum', () => {
         }
     }
 
+    async function resetFromLocal() {
+        loading.value = true
+        try {
+            console.log('Resetting from local data.json...')
+            const { data: localData } = await useFetch('/data.json', { key: 'reset-local-' + Date.now() })
+            if (localData.value) {
+                curriculum.value = localData.value as Curriculum
+                await saveToDrive()
+                toast.success('Curriculum reset from local JSON')
+            }
+        } catch (error) {
+            console.error('Failed to reset from local', error)
+            toast.error('Failed to reset from local JSON')
+        } finally {
+            loading.value = false
+        }
+    }
+
     return {
         curriculum,
         domains,
         loading,
         loadFromDrive,
+        resetFromLocal,
         saveToDrive,
         updateMeta,
         addTrack,
@@ -111,4 +130,3 @@ export const useCurriculumStore = defineStore('curriculum', () => {
         completeTopic
     }
 })
-
